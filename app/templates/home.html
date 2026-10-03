@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}收件箱 · bppassport{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>收件箱</h1>
+  {% if not voices %}
+  <p class="muted">还没有留言。让家人用设备录一条吧。</p>
+  {% else %}
+  <ul class="voice-list">
+    {% for v in voices %}
+    <li class="voice {% if not v.read_at %}unread{% endif %}">
+      <div class="avatar" data-avatar="{{ v.sender_avatar or 0 }}">{{ v.sender_name[:1] }}</div>
+      <div class="meta">
+        <div class="row">
+          <strong>{{ v.sender_name }}</strong>
+          <span class="duration">{{ v.duration_ms | fmt_duration }}</span>
+          <span class="time">{{ v.created_at | fmt_relative }}</span>
+        </div>
+        <audio controls preload="none" src="/api/v1/voices/{{ v.id }}" data-voice-id="{{ v.id }}"></audio>
+        <div class="row actions">
+          {% if not v.read_at %}<span class="badge">未读</span>{% endif %}
+          <form method="post" action="/voices/{{ v.id }}/read" class="inline">
+            <button type="submit" class="link">标为已读</button>
+          </form>
+          <form method="post" action="/voices/{{ v.id }}/delete" class="inline" onsubmit="return confirm('删除这条留言？')">
+            <button type="submit" class="link danger">删除</button>
+          </form>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+
+<section class="card">
+  <h2>家人</h2>
+  {% if not contacts %}
+  <p class="muted">还没有其他家人。让他们也注册一个账号。</p>
+  {% else %}
+  <ul class="contacts">
+    {% for c in contacts %}
+    <li>
+      <a href="/send?to={{ c.id }}">{{ c.name }}</a>
+      <span class="muted">给 TA 录一条</span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endblock %}

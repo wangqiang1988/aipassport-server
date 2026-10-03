@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}配对设备 · bppassport{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>配对设备</h1>
+  <p class="muted">让设备显示 6 位短码，然后在这里输入。</p>
+  {% if error %}
+  <div class="alert">{{ error }}</div>
+  {% endif %}
+  <form method="post" action="/pair" class="form">
+    <label>
+      <span>6 位短码</span>
+      <input name="code" type="text" inputmode="numeric" pattern="\d{4,10}" maxlength="10" required value="{{ code or '' }}">
+    </label>
+    <div class="actions">
+      <button type="submit">绑定设备</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

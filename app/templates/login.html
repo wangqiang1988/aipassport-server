@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}登录 · bppassport{% endblock %}
+{% block content %}
+<section class="card narrow">
+  <h1>登录 / 注册</h1>
+  <p class="muted">输入名字和密码。第一次用会自动注册。</p>
+  {% if error %}
+  <div class="alert">{{ error }}</div>
+  {% endif %}
+  <form method="post" action="/login" class="form">
+    <label>
+      <span>名字</span>
+      <input name="name" type="text" maxlength="64" required value="{{ name or '' }}">
+    </label>
+    <label>
+      <span>密码</span>
+      <input name="password" type="password" maxlength="128" required>
+    </label>
+    <div class="actions">
+      <button type="submit" name="action" value="login">登录</button>
+      <button type="submit" name="action" value="register" class="secondary">注册新账号</button>
+    </div>
+  </form>
+</section>
+{% endblock %}

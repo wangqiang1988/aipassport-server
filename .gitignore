@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+ENV/
+.env
+*.sqlite
+*.sqlite3
+*.db
+.Python
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+.tox/
+
+# Server runtime data
+voices/
+!voices/.gitkeep
+data.sqlite
+
+# Secrets
+*.secret
+*.pem
+*.key
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# ESP-IDF (kept here so this repo is standalone-ignorable)
+build/
+*.elf
+*.bin
+*.map
+*.hex
+*.uf2
+sdkconfig
+sdkconfig.old
+sdkconfig.dependencies
+dependencies.lock

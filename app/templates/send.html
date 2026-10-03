@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}发送留言 · bppassport{% endblock %}
+{% block content %}
+<section class="card">
+  <h1>发送留言</h1>
+  {% if to %}
+  <p class="muted">给 <strong>{{ to.name }}</strong> 录一条语音。</p>
+  {% else %}
+  <p class="muted">网页端目前只支持收听，发送请用设备。</p>
+  {% endif %}
+
+  <div class="alert info">
+    网页端录音功能（MVP 之后启用）。设备端请按 OK 录音。
+  </div>
+
+  {% if contacts %}
+  <h2>选一个家人</h2>
+  <ul class="contacts">
+    {% for c in contacts %}
+    <li>
+      <a href="/send?to={{ c.id }}">{{ c.name }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</section>
+{% endblock %}

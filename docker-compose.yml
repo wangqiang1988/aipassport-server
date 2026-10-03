@@ -1,0 +1,24 @@
+services:
+  api:
+    build: .
+    image: bppassport-api:latest
+    container_name: bppassport-api
+    restart: unless-stopped
+    ports:
+      - "8086:8000"
+    environment:
+      SECRET_KEY: ${SECRET_KEY:?SECRET_KEY is required (run: openssl rand -hex 32)}
+      DATABASE_URL: sqlite:////data/data.sqlite
+      VOICES_DIR: /data/voices
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      ACCESS_TOKEN_TTL_DAYS: ${ACCESS_TOKEN_TTL_DAYS:-365}
+      PAIRING_CODE_TTL_SECONDS: ${PAIRING_CODE_TTL_SECONDS:-600}
+      MAX_VOICE_DURATION_SECONDS: ${MAX_VOICE_DURATION_SECONDS:-60}
+    volumes:
+      - ./data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/healthz"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
